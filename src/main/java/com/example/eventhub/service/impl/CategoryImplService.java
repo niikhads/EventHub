@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CategoryImplService implements CategoryService {
+public class CategoryImplService  implements CategoryService {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryImplService.class);
 
