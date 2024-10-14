@@ -29,7 +29,7 @@ public class CategoryImplService implements CategoryService {
 
 
 
-    private CategoryRepository categoryRepository;
+    private CategoryRepository  categoryRepository;
 
 
     private CategoryMapper categoryMapper;
