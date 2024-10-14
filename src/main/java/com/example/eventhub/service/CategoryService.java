@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface CategoryService {
     public BaseResponse<List<CategoryResponse>> getAllCategories() ;
-    public BaseResponse<CategoryResponse> getCategoryById(int id) ;
+    public BaseResponse<CategoryResponse> getCategoryById(Long id) ;
     public BaseResponse<CategoryResponse> createCategory(CategoryRequest categoryRequest) ;
-    public BaseResponse<CategoryResponse> updateCategory(int id, CategoryRequest categoryRequest) ;
-    public BaseResponse<Void> deleteCategory(int id) ;
+    public BaseResponse<CategoryResponse> updateCategory(Long id, CategoryRequest categoryRequest) ;
+    public BaseResponse<Void> deleteCategory(Long id) ;
 
     }

@@ -17,7 +17,6 @@ public class EventResponse {
          String name;
          String description;
          LocalDateTime date;
-         LocalDateTime time;
          String location;
          Long price;
          String organizerName;

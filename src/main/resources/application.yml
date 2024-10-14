@@ -5,7 +5,7 @@ spring:
     include:
       - server
       - db
-security:
-  jwt:
-    secret-key: CgTOA2QC9nxYspeBZBRsEIoDmpBbGTjfDCE6WfnOHHrA7rgHafqC5u1m6GL22pNY
-    expiration: 300000
+#security:
+#  jwt:
+#    secret-key: CgTOA2QC9nxYspeBZBRsEIoDmpBbGTjfDCE6WfnOHHrA7rgHafqC5u1m6GL22pNY
+#    expiration: 300000

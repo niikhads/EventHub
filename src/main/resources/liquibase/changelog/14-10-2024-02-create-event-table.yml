@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 2
+      id: 14-10-2024-01-create-event-table
       author: Nihad
       changes:
         - createTable:
@@ -39,10 +39,6 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: time
-                  type: TIMESTAMP
-
-              - column:
                   name: price
                   type: BIGINT
 
@@ -50,11 +46,11 @@ databaseChangeLog:
                   name: organizer_name
                   type: VARCHAR(255)
 
-#              - column:
-#                  name: category_id
-#                  type: BIGINT
-#                  constraints:
-#                    nullable: false
+              - column:
+                  name: category_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
 
               - column:
                   name: created_at
@@ -65,15 +61,14 @@ databaseChangeLog:
                   name: updated_at
                   type: TIMESTAMP
                   defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
 
-#  - changeSet:
-#      id: 2
-#      author: your_name
-#      changes:
-#        - addForeignKeyConstraint:
-#            baseTableName: events
-#            baseColumnNames: category_id
-#            referencedTableName: category
-#            referencedColumnNames: id
-#            onDelete: CASCADE
-#            onUpdate: CASCADE
+        - addForeignKeyConstraint:
+            constraintName: fk_events_category_id
+            baseTableName: events
+            baseColumnNames: category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE

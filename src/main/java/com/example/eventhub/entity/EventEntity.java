@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 public class EventEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @Column(name = "id", insertable = false, updatable = false)
+    private Long id;
 
     String name;
 
@@ -29,16 +30,14 @@ public class EventEntity {
 
     LocalDateTime date;
 
-    LocalDateTime time;
-
     Long price;
 
     @Column(name = "organizer_name")
     String organizerName;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id")
-//    Category category;
+    @ManyToOne
+    @JoinColumn(name = "id")
+    Category category;
 
     LocalDateTime createdAt;
 

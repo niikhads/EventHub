@@ -2,6 +2,7 @@ package com.example.eventhub.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,11 +16,9 @@ public class EventRequest {
      String name;
      String description;
      LocalDateTime date;
-     LocalDateTime time;
      String location;
      Long price;
      String organizerName;
-
      Long categoryId;
 
 }

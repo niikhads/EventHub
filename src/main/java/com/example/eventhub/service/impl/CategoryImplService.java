@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CategoryImplService implements CategoryService {
+public class CategoryImplService  implements CategoryService {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryImplService.class);
 
@@ -56,7 +56,7 @@ public class CategoryImplService implements CategoryService {
         }
     }
 
-    public BaseResponse<CategoryResponse> getCategoryById(int id) {
+    public BaseResponse<CategoryResponse> getCategoryById(Long id) {
         try {
             logger.info("Fetching category by ID: {}", id);
             Optional<Category> category = categoryRepository.findById(id);
@@ -94,7 +94,7 @@ public class CategoryImplService implements CategoryService {
         }
     }
 
-    public BaseResponse<CategoryResponse> updateCategory(int id, CategoryRequest categoryRequest) {
+    public BaseResponse<CategoryResponse> updateCategory(Long id, CategoryRequest categoryRequest) {
         try {
             logger.info("Updating category with ID: {}", id);
             Optional<Category> existingCategory = categoryRepository.findById(id);
@@ -120,7 +120,7 @@ public class CategoryImplService implements CategoryService {
         }
     }
 
-    public BaseResponse<Void> deleteCategory(int id) {
+    public BaseResponse<Void> deleteCategory(Long id) {
         try {
             logger.info("Deleting category with ID: {}", id);
             Optional<Category> category = categoryRepository.findById(id);

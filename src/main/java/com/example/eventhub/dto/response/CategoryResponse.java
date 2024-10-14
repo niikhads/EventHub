@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryResponse {
     @Id
-    int id;
+    Long id;
     String name;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;

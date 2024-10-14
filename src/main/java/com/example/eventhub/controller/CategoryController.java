@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/categories")
 @RequiredArgsConstructor
 public class CategoryController {
 
@@ -26,7 +26,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BaseResponse<CategoryResponse>> getCategoryById(@PathVariable int id) {
+    public ResponseEntity<BaseResponse<CategoryResponse>> getCategoryById(@PathVariable Long id) {
         BaseResponse<CategoryResponse> categoryResponse = categoryService.getCategoryById(id);
         return ResponseEntity.status(categoryResponse.getCode()).body(categoryResponse);
     }
@@ -38,14 +38,14 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse<CategoryResponse>> updateCategory(@PathVariable int id, @RequestBody CategoryRequest categoryRequest) {
+    public ResponseEntity<BaseResponse<CategoryResponse>> updateCategory(@PathVariable Long id, @RequestBody CategoryRequest categoryRequest) {
         BaseResponse<CategoryResponse> categoryResponse = categoryService.updateCategory(id, categoryRequest);
         return ResponseEntity.status(categoryResponse.getCode()).body(categoryResponse);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponse<Void>> deleteCategory(@PathVariable int id) {
+    public ResponseEntity<BaseResponse<Void>> deleteCategory(@PathVariable Long id) {
         BaseResponse<Void> categoryResponse = categoryService.deleteCategory(id);
         return ResponseEntity.status(categoryResponse.getCode()).body(categoryResponse);
     }
