@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Nihad
+      changes:
+        - createTable:
+            tableName: events
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+
+              - column:
+                  name: location
+                  type: VARCHAR(255)
+
+              - column:
+                  name: date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: time
+                  type: TIMESTAMP
+
+              - column:
+                  name: price
+                  type: BIGINT
+
+              - column:
+                  name: organizer_name
+                  type: VARCHAR(255)
+
+#              - column:
+#                  name: category_id
+#                  type: BIGINT
+#                  constraints:
+#                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+#  - changeSet:
+#      id: 2
+#      author: your_name
+#      changes:
+#        - addForeignKeyConstraint:
+#            baseTableName: events
+#            baseColumnNames: category_id
+#            referencedTableName: category
+#            referencedColumnNames: id
+#            onDelete: CASCADE
+#            onUpdate: CASCADE

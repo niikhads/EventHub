@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: Nihaddbeaver
+    url: jdbc:postgresql://localhost:5432/eventHub
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public
+
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+
+  liquibase:
+    enabled: true
+    database-change-log-table: DATABASECHANGELOG
+    database-change-log-lock-table: DATABASECHANGELOGLOCK
+    change-log: classpath:liquibase/changelog-master.yml
