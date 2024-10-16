@@ -19,6 +19,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+
     @GetMapping
     public ResponseEntity<BaseResponse<List<CategoryResponse>>> getAllCategories() {
         BaseResponse<List<CategoryResponse>> categoryResponse = categoryService.getAllCategories();
