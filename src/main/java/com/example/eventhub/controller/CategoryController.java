@@ -24,6 +24,7 @@ public class CategoryController {
     public ResponseEntity<BaseResponse<List<CategoryResponse>>> getAllCategories() {
         BaseResponse<List<CategoryResponse>> categoryResponse = categoryService.getAllCategories();
         return ResponseEntity.status(categoryResponse.getCode()).body(categoryResponse);
+
     }
 
     @GetMapping("/{id}")
