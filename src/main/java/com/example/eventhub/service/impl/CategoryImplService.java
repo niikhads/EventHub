@@ -21,38 +21,45 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
-public class CategoryImplService  implements CategoryService {
+public class CategoryImplService implements CategoryService {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryImplService.class);
 
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
+    // Constructor Injection
+    @Autowired
+    public CategoryImplService(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
+        this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
+    }
 
-    private CategoryRepository  categoryRepository;
-
-
-    private CategoryMapper categoryMapper;
-
+    // Fetch all categories
     public BaseResponse<List<CategoryResponse>> getAllCategories() {
         try {
-            logger.info("Fetching all categories from database.");
+            logger.info("Fetching all categories from the database.");
             List<Category> categories = categoryRepository.findAll();
+
             if (categories.isEmpty()) {
                 throw new CategoryException("No categories found in the system.");
             }
+
             List<CategoryResponse> responses = categories.stream()
                     .map(categoryMapper::toResponse)
                     .collect(Collectors.toList());
 
             logger.info("Fetched {} categories successfully.", responses.size());
-            return new BaseResponse<>(200, "Categories fetched successfully", responses);
+            return new BaseResponse<>(200, "Categories fetched successfully", new BaseResponse.ResponseData<>(responses));
+
         } catch (CategoryException e) {
             logger.error("Error occurred while fetching categories: {}", e.getMessage());
             throw e;
+
         } catch (Exception e) {
             logger.error("Unexpected error occurred: {}", e.getMessage());
-            throw new CategoryException("Failed to fetch categories due to unexpected error.");
+            throw new CategoryException("Failed to fetch categories due to an unexpected error.");
         }
     }
 
@@ -61,13 +68,13 @@ public class CategoryImplService  implements CategoryService {
             logger.info("Fetching category by ID: {}", id);
             Optional<Category> category = categoryRepository.findById(id);
 
-            if (!category.isPresent()) {
+            if (category.isEmpty()) {
                 throw new CategoryException("Category with ID " + id + " not found.");
             }
 
             CategoryResponse response = categoryMapper.toResponse(category.get());
             logger.info("Category found with ID: {}", id);
-            return new BaseResponse<>(200, "Category found", response);
+            return new BaseResponse<>(200, "Category found", new BaseResponse.ResponseData<>(response));
         } catch (CategoryException e) {
             logger.error("Error occurred while fetching category: {}", e.getMessage());
             throw e;
@@ -78,21 +85,28 @@ public class CategoryImplService  implements CategoryService {
     }
 
     public BaseResponse<CategoryResponse> createCategory(CategoryRequest categoryRequest) {
-        try {
-            logger.info("Creating new category: {}", categoryRequest);
-            Category entity = categoryMapper.toEntity(categoryRequest);
-            entity.setCreatedAt(LocalDateTime.now());
-            entity.setUpdatedAt(LocalDateTime.now());
-            Category savedEntity = categoryRepository.save(entity);
-            CategoryResponse response = categoryMapper.toResponse(savedEntity);
+        logger.info("Creating new category: {}", categoryRequest);
 
-            logger.info("Category created successfully with ID: {}", savedEntity.getId());
-            return new BaseResponse<>(200, "Category successfully created", response);
-        } catch (Exception e) {
-            logger.error("Error occurred while creating category: {}", e.getMessage());
-            throw new CategoryException("Failed to create category due to unexpected error.");
+        // categoryRequest-in etibarlılığını yoxlayın
+        if (categoryRequest == null || categoryRequest.getName() == null || categoryRequest.getName().isEmpty()) {
+            logger.error("Invalid category request: {}", categoryRequest);
+            return new BaseResponse<>(400, "Invalid category request. Name is required.", null);
         }
+
+        // CategoryEntity yaradılması
+        Category entity = categoryMapper.toEntity(categoryRequest);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
+
+        // Entity-nin repository-də saxlanılması
+        Category savedEntity = categoryRepository.save(entity);
+        CategoryResponse response = categoryMapper.toResponse(savedEntity);
+
+        logger.info("Category created successfully with ID: {}", savedEntity.getId());
+        return new BaseResponse<>(200, "Category successfully created", new BaseResponse.ResponseData<>(response));
     }
+
+
 
     public BaseResponse<CategoryResponse> updateCategory(Long id, CategoryRequest categoryRequest) {
         try {
@@ -110,7 +124,7 @@ public class CategoryImplService  implements CategoryService {
             CategoryResponse response = categoryMapper.toResponse(updatedEntity);
 
             logger.info("Category updated successfully with ID: {}", id);
-            return new BaseResponse<>(200, "Category successfully updated", response);
+            return new BaseResponse<>(200, "Category successfully updated", new BaseResponse.ResponseData<>(response));
         } catch (CategoryException e) {
             logger.error("Error occurred while updating category: {}", e.getMessage());
             throw e;

@@ -1,11 +1,11 @@
 package com.example.eventhub.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -13,14 +13,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
 @Table(name = "categories")
-
 public class Category {
+
     @Id
-     Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
      String name;
+
+     @CreationTimestamp
      LocalDateTime createdAt;
-     LocalDateTime updatedAt;
+
+    @UpdateTimestamp
+    LocalDateTime updatedAt;
 }

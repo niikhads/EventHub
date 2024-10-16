@@ -4,6 +4,8 @@ package com.example.eventhub.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "events")
 public class EventEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", insertable = false, updatable = false)
@@ -30,19 +33,19 @@ public class EventEntity {
 
     LocalDateTime date;
 
+    @Column(name = "price")
     Long price;
 
     @Column(name = "organizer_name")
     String organizerName;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "category_id")
     Category category;
 
+    @CreationTimestamp
     LocalDateTime createdAt;
 
+    @UpdateTimestamp
     LocalDateTime updatedAt;
-
-
-
 }

@@ -4,6 +4,7 @@ import com.example.eventhub.dto.request.CategoryRequest;
 import com.example.eventhub.dto.response.BaseResponse;
 import com.example.eventhub.dto.response.CategoryResponse;
 import com.example.eventhub.service.CategoryService;
+import com.example.eventhub.service.impl.CategoryImplService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,6 @@
 package com.example.eventhub.dto.request;
 
+import jakarta.persistence.Column;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,9 +18,10 @@ public class EventRequest {
      String description;
      LocalDateTime date;
      String location;
+     String status;
      Long price;
      String organizerName;
      Long categoryId;
-
 }
+
 

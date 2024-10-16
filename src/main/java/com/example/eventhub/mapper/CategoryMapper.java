@@ -6,10 +6,11 @@ import com.example.eventhub.entity.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+import java.time.LocalDateTime;
 
+
+@Mapper(componentModel = "spring",imports={LocalDateTime.class})
 public interface CategoryMapper {
-    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
     Category toEntity(CategoryRequest categoryRequest);
 

@@ -1,8 +1,9 @@
 package com.example.eventhub.dto.response;
 
-import com.example.eventhub.entity.Category;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -17,11 +18,15 @@ public class EventResponse {
          String name;
          String description;
          LocalDateTime date;
+         String status;
          String location;
          Long price;
          String organizerName;
          CategoryResponse category;
+
+         @CreationTimestamp
          LocalDateTime createdAt;
+         @UpdateTimestamp
          LocalDateTime updatedAt;
     }
 

@@ -15,6 +15,6 @@ import java.time.LocalDateTime;
 public class CategoryRequest {
 
     String name;
-    LocalDateTime createdAt;
+  //  LocalDateTime createdAt;
    // LocalDateTime updatedAt;
 }

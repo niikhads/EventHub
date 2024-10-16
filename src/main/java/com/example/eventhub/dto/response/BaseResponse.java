@@ -1,17 +1,25 @@
 package com.example.eventhub.dto.response;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BaseResponse<T> {
-     private int code;
-     private String message;
-     private T data;
+
+     int code;
+     String message;
+     ResponseData<T> response;
+
+     @Data
+     public static class ResponseData<T> {
+          private T data;
+          public ResponseData(T data) {
+               this.data = data;
+          }
+     }
 }
