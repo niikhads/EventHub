@@ -43,6 +43,7 @@ public class EventEntity {
     @JoinColumn(name = "category_id")
     Category category;
 
+
     @CreationTimestamp
     LocalDateTime createdAt;
 

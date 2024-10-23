@@ -3,9 +3,11 @@ package com.example.eventhub.service.impl;
 import com.example.eventhub.dto.request.EventRequest;
 import com.example.eventhub.dto.response.BaseResponse;
 import com.example.eventhub.dto.response.EventResponse;
+import com.example.eventhub.entity.Category;
 import com.example.eventhub.entity.EventEntity;
 import com.example.eventhub.exception.EventException;
 import com.example.eventhub.mapper.EventMapper;
+import com.example.eventhub.repository.CategoryRepository;
 import com.example.eventhub.repository.EventRepository;
 import com.example.eventhub.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,14 @@ public class EventImplService implements EventService {
 
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
+    private final CategoryRepository categoryRepository;
 
     // Constructor Injection
     @Autowired
-    public EventImplService(EventRepository eventRepository, EventMapper eventMapper) {
+    public EventImplService(EventRepository eventRepository, EventMapper eventMapper, CategoryRepository categoryRepository) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
+        this.categoryRepository = categoryRepository;
     }
 
     public BaseResponse<List<EventResponse>> getAllEvents() {
@@ -61,12 +65,18 @@ public class EventImplService implements EventService {
         }
     }
 
-
     public BaseResponse<EventResponse> createEvent(EventRequest eventRequest) {
         logger.info("Creating new event: {}", eventRequest);
 
+        // categoryId ilə category obyektini bazadan tam olaraq tapırıq
+        Category category = categoryRepository.findById(eventRequest.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+
         // EventRequest-dən EventEntity-ə çevrilir
         EventEntity entity = eventMapper.toEntity(eventRequest);
+
+        // category obyektini tam olaraq doldururuq
+        entity.setCategory(category);
 
         // Entity-nin repository-də saxlanılması
         EventEntity savedEntity = eventRepository.save(entity);
@@ -77,8 +87,6 @@ public class EventImplService implements EventService {
         logger.info("Event created successfully with ID: {}", savedEntity.getId());
         return new BaseResponse<>(200, "Event successfully created", new BaseResponse.ResponseData<>(response));
     }
-
-
 
 
     public BaseResponse<EventResponse> getEventById(Long id) {

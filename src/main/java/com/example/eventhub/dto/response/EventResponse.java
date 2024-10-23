@@ -24,10 +24,10 @@ public class EventResponse {
          String organizerName;
          CategoryResponse category;
 
-         @CreationTimestamp
-         LocalDateTime createdAt;
-         @UpdateTimestamp
-         LocalDateTime updatedAt;
+//         @CreationTimestamp
+//         LocalDateTime createdAt;
+//         @UpdateTimestamp
+//         LocalDateTime updatedAt;
     }
 
 

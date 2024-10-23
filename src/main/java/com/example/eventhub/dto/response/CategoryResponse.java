@@ -18,7 +18,7 @@ public class CategoryResponse {
     @Id
     Long id;
     String name;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
+//    LocalDateTime createdAt;
+//    LocalDateTime updatedAt;
     }
 

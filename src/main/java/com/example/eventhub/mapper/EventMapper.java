@@ -5,20 +5,40 @@ import com.example.eventhub.dto.response.CategoryResponse;
 import com.example.eventhub.dto.response.EventResponse;
 import com.example.eventhub.entity.Category;
 import com.example.eventhub.entity.EventEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
-import java.time.LocalDateTime;
 
-@Mapper(componentModel = "spring", imports = {LocalDateTime.class})
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface EventMapper {
 
+    @Mapping(source = "categoryId", target = "category", qualifiedByName = "mapCategoryIdToCategory")
     EventEntity toEntity(EventRequest eventRequest);
 
-    // Burada category sahəsini map etməliyik
-    @Mapping(target = "category", source = "category")
-    EventResponse toResponse(EventEntity eventEntity);
+    @Mapping(source = "category", target = "category", qualifiedByName = "mapCategoryToCategoryResponse")
+    EventResponse toResponse(EventEntity savedEntity);
 
-    // `Category`-dən `CategoryResponse`-ə çevirmək üçün əlavə bir metodu nəzərdə tuta bilərsiniz
-    CategoryResponse toCategoryResponse(Category category);
+    @Named("mapCategoryIdToCategory")
+    default Category mapCategoryIdToCategory(Long categoryId) {
+        if (categoryId == null) {
+            return null;
+        }
+        Category category = new Category();
+        category.setId(categoryId);
+        return category;
+    }
+
+    @Named("mapCategoryToCategoryResponse")
+    default CategoryResponse mapCategoryToCategoryResponse(Category category) {
+        if (category == null) {
+            return null;
+        }
+        return CategoryResponse.builder()
+                .id(category.getId())
+                .name(category.getName())
+                .build();
+    }
 }
+
