@@ -1,5 +1,11 @@
 package com.example.eventhub.dto.response;
 
+import com.example.eventhub.enums.EventStatus;
+//import com.example.eventhub.enums.EventStatusSerializer;
+import com.example.eventhub.enums.EventStatusDeserializer;
+import com.example.eventhub.enums.EventStatusSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,7 +24,11 @@ public class EventResponse {
          String name;
          String description;
          LocalDateTime date;
-         String status;
+
+//@JsonSerialize(using = EventStatusSerializer.class)
+//@JsonDeserialize(using = EventStatusDeserializer.class)
+         EventStatus status;
+
          String location;
          Long price;
          String organizerName;

@@ -5,6 +5,7 @@ import com.example.eventhub.dto.response.BaseResponse;
 import com.example.eventhub.dto.response.EventResponse;
 import com.example.eventhub.entity.Category;
 import com.example.eventhub.entity.EventEntity;
+import com.example.eventhub.enums.EventStatus;
 import com.example.eventhub.exception.EventException;
 import com.example.eventhub.mapper.EventMapper;
 import com.example.eventhub.repository.CategoryRepository;
@@ -50,6 +51,7 @@ public class EventImplService implements EventService {
             // Convert EventEntity to EventResponse
             List<EventResponse> responses = eventEntities.stream()
                     .map(eventMapper::toResponse)
+
                     .collect(Collectors.toList());
 
             logger.info("Fetched {} events successfully.", responses.size());
@@ -59,10 +61,11 @@ public class EventImplService implements EventService {
             logger.error("Error occurred while fetching events: {}", e.getMessage());
             throw e;
 
-        } catch (Exception e) {
-            logger.error("Unexpected error occurred: {}", e.getMessage());
-            throw new EventException("Failed to fetch events due to unexpected error.");
-        }
+      }
+//        catch (Exception e) {
+//            logger.error("Unexpected error occurred: {}", e.getMessage());
+//            throw new EventException("Failed to fetch events due to unexpected error.");
+//        }
     }
 
     public BaseResponse<EventResponse> createEvent(EventRequest eventRequest) {
