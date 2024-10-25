@@ -2,11 +2,7 @@ package com.example.eventhub.entity;
 
 
 import com.example.eventhub.enums.EventStatus;
-import com.example.eventhub.enums.EventStatusDeserializer;
-import com.example.eventhub.enums.EventStatusSerializer;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.example.eventhub.enums.EventStatusConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -36,7 +32,8 @@ public class EventEntity {
 
 //    @JsonSerialize(using = EventStatusSerializer.class)
 //    @JsonDeserialize(using = EventStatusDeserializer.class)
-    @Enumerated(EnumType.ORDINAL)
+ //   @Enumerated(EnumType.ORDINAL)
+    @Convert(converter = EventStatusConverter.class)
     EventStatus status;
 
     String location;
@@ -60,12 +57,5 @@ public class EventEntity {
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
-    @JsonProperty("status") // Bu annotasiya JSON formatında ədəd dəyəri gözlədiyini göstərir
-    public int getStatusAsInt() {
-        return status != null ? status.getValue() : -1; // -1 qeyri-mümkün dəyərdir
-    }
 
-    public void setStatusFromInt(int statusValue) {
-        this.status = EventStatus.forValue(statusValue);
-    }
 }

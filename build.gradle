@@ -33,6 +33,8 @@ dependencies {
 //    implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
 //    runtimeOnly "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
 //    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jwtVersion}"
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+    implementation 'org.hibernate:hibernate-core:6.2.8.Final'
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation "org.mapstruct:mapstruct:$mapstruct_version"
